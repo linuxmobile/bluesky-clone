@@ -1,7 +1,9 @@
+import { redirect } from "next/navigation"
 import { createServerClient } from "@supabase/ssr"
 import { cookies } from "next/headers"
 import { BlueSky } from "./icons/bsky-logo"
 import { AuthButtonServer } from "./components/auth-button-server"
+import PostCard from "./components/post-card"
 
 export default async function Home() {
   const cookieStore = cookies()
@@ -16,17 +18,31 @@ export default async function Home() {
       }
     }
   )
-  const { data: posts } = await supabase.from("posts").select("*")
+
+  const { data: { session } } = await supabase.auth.getSession()
+
+  if (session === null) {
+    redirect("/login")
+  }
+
+  const { data: posts } = await supabase.from("posts").select("*, user:users(name, avatar_url, user_name)")
+
   return (
     <main className="grid min-h-screen place-items-center place-content-center gap-y-6">
-      <BlueSky className="size-36" />
-      <h1 className="text-5xl font-bold opacity-80">Bluesky</h1>
+      <BlueSky className="size-12" />
       <AuthButtonServer />
-      <pre>
-        { 
-          JSON.stringify(posts, null, 2)
-        }
-      </pre>
+      {
+        posts?.map(post => {
+          const { id, user, content } = post
+          const { user_name: userName, name: userFullName, avatar_url: avatarUrl } = user
+          return <PostCard key={id}
+            userName={userName}
+            userFullName={userFullName}
+            avatarUrl={avatarUrl}
+            content={content}
+          />
+        })
+      }
     </main>
   )
 }
