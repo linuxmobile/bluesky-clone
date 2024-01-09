@@ -9,7 +9,7 @@ export default function PostCard({
     content: string
   }) {
   return (
-    <article className="w-full flex items-start justify-start gap-x-6">
+    <article className="w-full flex items-start justify-start gap-x-6 py-4 px-6 border border-gray-500/30">
       <img src={avatarUrl} className="size-12 rounded-full" />
       <section>
         <header className="flex items-center justify-start gap-y-3">
@@ -17,7 +17,7 @@ export default function PostCard({
             <p className="font-bold">{userFullName} <span className="font-light opacity-70">@{userName}</span></p>
           </div>
         </header>
-        <p>{content}</p>
+        <p className="text-lg">{content}</p>
         <footer></footer>
       </section>
     </article>

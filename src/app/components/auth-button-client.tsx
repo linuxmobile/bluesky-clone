@@ -27,7 +27,7 @@ export function AuthButton({ session }: { session: Session | null }) {
   }
 
   return (
-    <header className="grid gap-y-3">
+    <header className="grid gap-y-3 w-full">
       {
         session === null ? (
           <button onClick={handleSignIn} className="flex items-center justify-center bg-blue-500 rounded-full px-6 py-3">

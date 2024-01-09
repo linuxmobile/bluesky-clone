@@ -28,21 +28,26 @@ export default async function Home() {
   const { data: posts } = await supabase.from("posts").select("*, user:users(name, avatar_url, user_name)")
 
   return (
-    <main className="grid min-h-screen place-items-center place-content-center gap-y-6">
-      <BlueSky className="size-12" />
-      <AuthButtonServer />
-      {
-        posts?.map(post => {
-          const { id, user, content } = post
-          const { user_name: userName, name: userFullName, avatar_url: avatarUrl } = user
-          return <PostCard key={id}
-            userName={userName}
-            userFullName={userFullName}
-            avatarUrl={avatarUrl}
-            content={content}
-          />
-        })
-      }
+    <main className="grid grid-cols-4 grid-flow-row auto-rows-max min-h-screen place-items-center place-content-center gap-y-6">
+      <aside className="span-col-1 h-full">
+        <BlueSky className="size-12" />
+        <AuthButtonServer />
+      </aside>
+      <main className="col-span-2 h-full gap-y-3">
+        {
+          posts?.map(post => {
+            const { id, user, content } = post
+            const { user_name: userName, name: userFullName, avatar_url: avatarUrl } = user
+            return <PostCard key={id}
+              userName={userName}
+              userFullName={userFullName}
+              avatarUrl={avatarUrl}
+              content={content}
+            />
+          })
+        }
+      </main>
+      <aside className="col-span-1 h-full"></aside>
     </main>
   )
 }
