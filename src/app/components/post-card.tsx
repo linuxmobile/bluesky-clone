@@ -1,4 +1,4 @@
-export default function PostCard({
+export function PostCard({
   userFullName,
   userName,
   avatarUrl,
