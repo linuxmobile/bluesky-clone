@@ -1,4 +1,4 @@
-import { type Database } from "./database.ts";
+import { type Database } from "./database";
 
 type PostEntity = Database["public"]["Tables"]["posts"]["Row"];
 type UserEntity = Database["public"]["Tables"]["users"]["Row"];
